@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+spec:
+  selector: 
+    matchLabel:
+      app: web
+  template:
+    metadata:
+      label:
+        app: web     
+    spec: 
+      contaniners:
+        - name: web
+        image: ernestojunior/conversao-temperatura:v1
+        ports: 
+        - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Service
+metadata:
+  name: web          
+spec:
+  selector: 
+    app: web
+    ports:
+      - port: 80
+        targetPort: 8080
+        NodePort: 30000
+    type: NodePort
